@@ -25,3 +25,17 @@ dec.draw()
 
 
 
+
+
+function testDesc(isDesc){
+  return function(target){
+    target.isDesc = isDesc
+  }
+}
+
+@testDesc(false)
+class Demo {
+
+}
+alert(Demo.isDesc)
+

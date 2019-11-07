@@ -1,4 +1,4 @@
-import React, { useState,useReducer   } from 'react'
+import React, { useState,useReducer } from 'react'
 // useReducer介绍和简单使用
 function Example4(){
   const [count,setCount] = useState(0)

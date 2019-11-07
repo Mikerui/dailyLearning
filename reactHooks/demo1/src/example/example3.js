@@ -14,11 +14,10 @@ function Example3(){
       <p>You clicked {count} times</p>
       <button onClick={()=>{setCount(count+5  )}}>click me</button>   
       <CountContext.Provider value={count}>
-      </CountContext.Provider>  
-
+      </CountContext.Provider>
       <CountContext.Provider value={count}>
-    <Counter />
-</CountContext.Provider>
+       <Counter />
+      </CountContext.Provider>
     </div>
   )
 }

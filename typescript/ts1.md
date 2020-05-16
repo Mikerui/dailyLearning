@@ -136,3 +136,30 @@ console.log(teFunc('mike',18))
 ```
 
 # 三种函数的定义方式
+
+- 函数声明法
+  > 函数声明法创建函数是最常用的函数定义法。使用 function 关键字和函数名去定义一个函数。
+  ```
+  function add(x:number,y:number):number{
+    return x+y
+  }
+  ```
+- 函数表达式法
+  > 函数表达式法是将一个函数赋值给一个变量，这个变量名就是函数名。通过变量名就可以调用函数了。这种方式定义的函数，必须在定义之后，调用函数。下面例子中等号右边的函数没有函数名，称为匿名函数。
+
+```
+const add = function(x:number,y:number):number{
+    return x+y
+}
+console.log(add(1,4))
+```
+
+- 箭头函数
+  > 箭头函数是 es6 新增的函数定义方式，箭头函数定义的函数一般用语回调函数中
+
+```
+const add = function(x:number,y:number):number=>{
+return x+y
+}
+console.log(add(3,4))
+```

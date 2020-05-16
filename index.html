@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+ 
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+ 
+ 
+    <meta charset="utf-8" />
+ 
+    <style>
+        body {
+            background-color: #21415a;
+        }
+ 
+        .range-wrapper {
+            width: 100%;
+            box-sizing: border-box;
+        }
+ 
+            .range-wrapper .range-header {
+                position: relative;
+                height: 25px;
+            }
+ 
+            .range-wrapper .range-container {
+                position: relative;
+                height: 30px;
+            }
+ 
+            .range-wrapper .range-header .range-text {
+                position: absolute;
+                color: #fff;
+                font-size: 14px;
+                font-family: '微软雅黑';
+            }
+ 
+            .range-wrapper .range-process {
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                width: 100%;
+            }
+ 
+        .range-linegap {
+            height: 5px;
+            border-radius: 4px;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+        }
+ 
+        .range-wrapper .range-process.range-blue {
+            z-index: 3;
+        }
+ 
+        .range-wrapper .range-process.range-gray {
+            z-index: 2;
+        }
+ 
+        .range-wrapper .range-process .range-lines {
+            position: absolute;
+        }
+ 
+ 
+            .range-wrapper .range-process .range-lines .range-line {
+                height: 5px;
+                position: absolute;
+                top: 0px;
+            }
+ 
+        .range-wrapper .range-process.range-blue .range-line {
+            background-color: #0094ff;
+        }
+ 
+        .range-wrapper .range-process.range-gray .range-line {
+            background-color: #cac7c7;
+        }
+ 
+        .range-wrapper .range-process .range-btns {
+        }
+ 
+        .range-wrapper .range-process.range-blue .range-btns .range-btn {
+            border: solid 2px #0094ff;
+        }
+ 
+            .range-wrapper .range-process.range-blue .range-btns .range-btn::after {
+                background-color: #0094ff;
+            }
+ 
+        .range-wrapper .range-process.range-gray .range-btns .range-btn {
+            border: solid 2px #cac7c7;
+        }
+ 
+            .range-wrapper .range-process.range-gray .range-btns .range-btn::after {
+                background-color: #cac7c7;
+            }
+ 
+        .range-wrapper .range-btn {
+            width: 14px;
+            height: 14px;
+            border-radius: 45px;
+            position: absolute;
+            top: 0px;
+            z-index: 3;
+            top: -50%;
+            margin-top: -5px;
+            left: 0px;
+            cursor: pointer;
+        }
+ 
+            .range-wrapper .range-btn::after {
+                content: '';
+                border: 0px;
+                width: 10px;
+                height: 10px;
+                border-radius: 45px;
+                position: absolute;
+                top: 50%;
+                margin-top: -5px;
+                left: 50%;
+                margin-left: -5px;
+            }
+    </style>
+</head>
+<body>
+ 
+ 
+ 
+    <div id="rangeS" style="width:900px;margin-left:100px"></div> 
+ 
+ 
+ 
+ 
+ 
+    <div class="range-wrapper" id="template" style="display:none;">
+        <div class="range-header">
+            <span class="range-text">60平</span>
+            <span class="range-text" style="left:180px">180平</span>
+            <span class="range-text" style="left:360px">360平</span>
+        </div>
+        <div class="range-container">
+            <div class="range-process range-blue">
+                <div class="range-lines">
+                    <canvas id="canvas2" style="width:100%;height:100%"></canvas>
+                </div>
+                <div class="range-btns">
+                    <span class="range-btn" style="left:0px;"></span>
+                    <span class="range-btn" style="left:180px;"></span>
+                    <span class="range-btn" style="left:360px;"></span>
+                </div>
+            </div>
+            <div class="range-process range-gray">
+ 
+                <div class="range-btns">
+                    <span class="range-btn" style="left:0px;"></span>
+                    <span class="range-btn" style="left:180px;"></span>
+                    <span class="range-btn" style="left:360px;"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+ 
+ 
+ 
+        (function () {
+ 
+            var defaultOptions = {
+                lineHeight: 5,
+                splitWidth: 18,
+                lineTop: '1px',
+                step: 1,
+                width: 400,
+                splits: [],  // 分割线数据集 
+                lineFillStyle: "#0094ff",
+                lineFillStyleGray: "#cac7c7"
+            };
+            function DxRangeSlider()
+            {
+                this.initialize.apply(this, arguments);
+            }
+            DxRangeSlider.prototype = {
+                constructor:DxRangeSlider,
+                initialize: function (element, options) {
+                    element = $(element);
+                    var that = this;
+                    that.wrapper = element;
+                    that.options = options = $.extend({}, defaultOptions, options);
+                    that.init();
+                    that._initEvents();
+                    that._render();
+                },
+                init: function () {
+                    var that = this, wrapper = that.wrapper, header = $('<div class="range-header"></div>').appendTo(wrapper), container = $('<div class="range-container"></div>').appendTo(wrapper), blueProcess, grayProcess;
+                    that.wrapper.addClass('range-wrapper');
+                    blueProcess = $('<div class="range-process range-blue">  <div class="range-lines"></div><div class="range-btns"></div></div>').appendTo(container);
+                    grayProcess = $('<div class="range-process range-gray"><div class="range-lines"></div> <div class="range-btns"></div></div>').appendTo(container);
+                    that._onRangeChange = that.options.onRangeChange || $.noop;
+                    that._onRangeMove = that.options.onRangeMove || $.noop;
+                    that._blueProcess = blueProcess;
+                    that._grayProcess = grayProcess;
+                },
+                _createText: function (text, left, options) {
+                    var text = $(' <span class="range-text"></span>').text(text), top = 0, width = options.width || 'auto';
+                    if (options.offset) {
+                        left = left + options.offset[0];
+                        top = options.offset[1];
+                    }
+                    text.css({ left: left + "px", top: top + "px", width: width });
+                    return text;
+                },
+                _createSplit: function (index, x, options) {
+                    var text = $('<span class="range-btn"> </span>');
+                    text.attr('data-value', options.value).attr('data-position', x).attr('data-index', index);
+                    text.css({ left: x + "px" });
+                    return text;
+                },
+                _initEvents: function () {
+                    this._blueProcess.on('mousedown.dxrange', '.range-btn', $.proxy(this._onDown, this));
+                },
+                _getDefaultData: function (element) {
+                    if (element.length <= 0) {
+                        return null;
+                    }
+                    var value = Number(element.attr('data-value')),
+                        position = Number(element.attr('data-position')),
+                        left = parseFloat(element.css('left')),
+                            index = Number(element.attr('data-index'));
+                    return {
+                        element: element,
+                        value: value,
+                        position: position,
+                        left: left,
+                        index: index
+                    };
+                },
+                _onDown: function (e) {
+                    var that = this, element = $(e.currentTarget), value = element.attr('data-value');
+                    if (e.button != 0) {
+                        return;
+                    }
+                    that._eventData = {
+                        prev: that._getDefaultData(element.prev('.range-btn')),
+                        current: that._getDefaultData(element),
+                        next: that._getDefaultData(element.next('.range-btn')),
+                        x: e.pageX,
+                        y: e.pageY
+                    };
+                    $(window).on('mousemove.docdxrange', $.proxy(this._onMove, this));
+                    $(window).on('mouseup.docdxrange', $.proxy(this._onUp, this));
+                    e.preventDefault();
+                },
+                _onUp: function (e) {
+                    if (e.button != 0) {
+                        return;
+                    }
+                    $(window).off('.docdxrange');
+                    if (this._eventData) {
+                        this._onRangeChange(this._eventData.current);
+                    }
+                },
+                _onMove: function (e) {
+                    var that = this, pageX = e.pageX,
+                        eventData = that._eventData,
+                        current = eventData.current,
+                        maxCount = that._maxCount,
+                        splitW = that._splitW,
+                        maxWidth = that._width,
+                        minWidth = 0,
+                        splitBtnWidth = that.options.splitWidth,
+                        left,
+                        startX = eventData.x,
+                        w = that._width / 100,
+                        step = that.options.step,
+                        next = eventData.next,
+                        prev = eventData.prev,
+                        minOffset = 0,
+                        maxOffset = 0,
+                        moveStatus = parseInt(current.element.css('left')) < current.position ? -1 : pageX == startX ? 0 : 1;
+                    if (current.element && moveStatus != 0) {
+                        var selectValue, value = current.value, maxValue, offset = pageX - startX, mstep, maxOffset2 = splitW - splitBtnWidth, stepX, maxStep, left = current.left + offset;
+ 
+                        if (moveStatus == -1 && prev) {
+                            maxValue = current.value - prev.value;
+                        } else if (moveStatus == 1 && next) {
+                            maxValue = next.value - current.value;
+                        } else if (moveStatus == 1) {
+                            maxValue = current.value - prev.value;
+ 
+                        } else if (moveStatus == -1) {
+                            maxValue = next.value - current.value;
+                        }
+                        maxValue = maxValue;
+                        maxStep = parseInt(maxValue / step);
+                        stepX = parseFloat(maxOffset2 / maxStep);
+ 
+                        minOffset = prev == null ? current.position : (prev.left < prev.position ? prev.position : prev.left) + splitBtnWidth;
+                        maxOffset = next == null ? current.position : (next.left > next.position ? next.position : next.left) - splitBtnWidth;
+                        left = Math.min(Math.max(left, minOffset), maxOffset);
+                        if (Math.abs(left - current.position) < 2) {
+                            left = current.position;
+                        }
+                        var currentStep = parseInt((current.position - left) / stepX), nvalueStep = currentStep * step, selectValue = value - nvalueStep;
+                        if (left >= minOffset && left <= maxOffset) {
+ 
+                            current.element.css({ left: left + 'px' });
+                            eventData.current.selectValue = selectValue;
+                            if (eventData._oldValue != selectValue) {
+                                that._onRangeMove(current);
+                            }
+                            eventData._oldValue = selectValue;
+                        }
+                        that.drawLine();
+                    }
+                },
+                drawLine: function () {
+                    var that = this, ctx = that.ctx, blues = this._blues, i = 0, len = blues.length, element, value, position, left, height = that.options.lineHeight, splitWidth = that.options.splitWidth;
+                    that.drawLines();
+                    ctx.fillStyle = that.options.lineFillStyleGray;
+                    for (; i < len; i++) {
+                        element = blues[i];
+                        value = Number(element.attr('data-value'));
+                        position = Number(element.attr('data-position'));
+                        left = parseFloat(element.css('left'));
+                        if (left == position) {
+                            continue;
+                        }
+                        if (left > position) {
+                            ctx.fillRect(position + splitWidth, 0, left - position, height);
+                        } else {
+                            ctx.fillRect(position, 0, left - position, height);
+                        }
+                    }
+                },
+                drawLines: function () {
+                    var that = this, ctx = that.ctx, lines = that._lines, i = 0, len = lines.length, line, width = that._width, height = that.options.lineHeight;
+                    ctx.clearRect(0, 0, width, height);
+                    ctx.fillStyle = that.options.lineFillStyle;
+                    for (; i < len; i++) {
+                        line = lines[i];
+                        ctx.fillRect(line.x, 0, line.w, height);
+                    }
+                },
+                _initLines: function () {
+                    var that = this, width = that._width, height = that.options.lineHeight;
+                    var cvs = document.createElement('canvas');
+                    cvs.width = width;
+                    cvs.height = height;
+                    cvs.style.position = "absolute";
+                    cvs.style.top = that.options.lineTop;
+                    var ctx = cvs.getContext('2d');
+                    that.ctx = ctx;
+                    that._blueProcess.children('.range-lines').append(cvs)
+                    that.drawLines();
+                },
+                _render: function (text) {
+                    var that = this,
+                        offsetX = that.options.splitWidth,
+                        width = that.wrapper.width(),
+                        texts = [],
+                        lines = [],
+                        grays = [],
+                        blues = [],
+                        lines = that.lines = [],
+                        options = that.options,
+                        text,
+                        line,
+                        sbtn,
+                        splits = options.splits,
+                        i = 0,
+                        splitsLen = splits.length,
+                        len = splitsLen - 1,
+                        splitValue, left, top, splitW = parseInt(width / len);
+                    for (; i <= len; i++) {
+                        splitValue = splits[i];
+                        left = i * splitW;
+                        text = that._createText(splitValue.title, left, splitValue);
+                        texts.push(text);
+                        sbtn = that._createSplit(i, left, splitValue);
+                        blues.push(sbtn);
+                        grays.push(sbtn.clone());
+                        if (i < len) {
+                            lines.push({
+                                x: i * splitW + offsetX,
+                                w: splitW - offsetX
+                            });
+                        }
+                    }
+                    that._lines = lines;
+                    that._blues = blues;
+                    that._width = width;
+                    that._maxCount = splitsLen
+                    that._splitW = splitW;
+                    that.wrapper.children('.range-header').append(texts);
+                    that._blueProcess.children('.range-btns').append(blues);
+                    that._grayProcess.children('.range-btns').append(grays);
+                    that._initLines();
+                }
+            };
+ 
+ 
+            var _DxRange = new DxRangeSlider('#rangeS', {
+                step: 1,
+                splits: [
+                    { value: 60, title: "60平", offset: [-10,0]},
+                    { value: 80, title: "80平", offset: [-10, 0] },
+                    { value: 100, title: "100平", offset: [-10, 0] },
+                    { value: 150, title: "150平", offset: [-10, 0] },
+                    { value: 200, title: "200平", offset: [-10, 0] },
+                    { value: 250, title: "250平", offset: [-10, 0] },
+                    { value: 300, title: "300平", offset: [-10, 0],width:'80px'}
+                ],
+                onRangeChange: function (e)
+                {
+                    console.log("onRangeChange:" + e.selectValue+",value:"+e.value);
+                    
+                },
+                onRangeMove: function (e) {
+                    console.log("onRangeMove:" + e.selectValue);
+                }
+            });
+ 
+ 
+           
+        }());
+ 
+ 
+ 
+ 
+    </script>
+</body>
+</html>

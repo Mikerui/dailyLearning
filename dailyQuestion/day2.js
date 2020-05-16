@@ -36,7 +36,6 @@ let page = total / once
 let index = 0;
 //循环加载数据
 /**
- * 
  * @param {Number} curTotal  当前总条数
  * @param {Number} curIndex  当前次数
  */

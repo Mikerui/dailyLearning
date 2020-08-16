@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<div id="app">
+			<h2>1. 双大括号表达式</h2>
+			<p>{{msg}}</p>
+			<p>{{msg.toUpperCase()}}</p>
+			<h2>2. 指令一: 强制数据绑定</h2>
+			<a href="url">访问指定站点</a><br /><!-- 不能使用 -->
+			<a v-bind:href="url">访问指定站点 2</a><br />
+			<a :href="url">访问指定站点 3</a><br />
+			<h2>3. 指令二: 绑定事件监听</h2>
+			<button v-on:click="handleClick">点我</button>
+			<button @click="handleClick">点我 2</button>
+		</div>
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		<script type="text/javascript">
+			new Vue({
+				el: '#app',
+				data: {
+					// data 的所有属性都会成功 vm 对象的属性 , 而模板页面中可以直接访问
+					msg: 'NBA I Love This Game!',
+					url: 'http://www.baidu.com',
+				},
+				methods: {
+					handleClick() {
+						alert(' 处理点击');
+					},
+				},
+			});
+		</script>
+	</body>
+</html>

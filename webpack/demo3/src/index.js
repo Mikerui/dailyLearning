@@ -3,7 +3,5 @@ function test(){
 }
 console.log(test());
 
-import './test.css'
-import './demo.less'
-
+import './css/demo.less'
 import './js/index'

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>vue</title>
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	</head>
+	<body>
+		<div id="app">
+			{{ message }}
+			<button @click="onUpdate">更新</button>
+		</div>
+
+		<script>
+			var app = new Vue({
+				el: '#app',
+				data: {
+					message: 'Hello Vue!',
+				},
+				methods: {
+					onUpdate(){
+						this.message = '更新'
+					}
+				},
+				beforeCreate() {
+					console.log('刚刚创建实例');
+				},
+				created() {
+					console.log('实例创建完成');
+				},
+				beforeMount() {
+					console.log('模板编译之前 ');
+				},
+				mounted() {
+					/* 请求数据，操作Dom时常用 */
+					console.log('实力挂载完成');
+				},
+				beforeUpdate() {
+					console.log('更新前');
+				},
+				updated() {
+					console.log('更新后');
+				},
+				beforeDestroy() {
+					/* 页面销毁时要保存数据，可以监听这个销毁的生命周期 */
+					console.log('实例销毁前');
+					alert('准备销毁');
+				},
+				destroyed() {
+					console.log('实力销毁后');
+				},
+			});
+		</script>
+	</body>
+</html>

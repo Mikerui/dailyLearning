@@ -1,6 +1,5 @@
 // this-用于访问当前方法所属的对象
-'use strict'
-let obj = {
+'use strict'let obj = {
   a:12,
   fn(){
     console.log(this === obj); // true

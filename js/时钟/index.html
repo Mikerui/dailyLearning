@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>时钟</title>
+
+</head>
+<body>
+  <script>
+    function getDate() {
+      const now = new Date()
+    const day = now.getDate()
+    const month = now.getMonth() + 1
+    const hour = now.getHours()    
+    const minute = now.getMinutes()
+    const se = now.getSeconds()
+    const dateStr = `<div>${month}月${day}日${hour}时${minute}分${se}秒</div>`
+    // document.write(dateStr)
+     }
+    setInterval(() => {
+      getDate()
+    }, 1000);
+  </script>
+    <style type="text/css">
+      div{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    </style>
+</body>
+</html>

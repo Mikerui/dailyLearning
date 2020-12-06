@@ -7,7 +7,7 @@ function dealStr (str) {
             ++obj[v].count
         } else {
             obj[v] = {
-                count:1,
+                count: 1,
                 value: v
             }
         }

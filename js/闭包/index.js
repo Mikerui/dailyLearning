@@ -5,7 +5,7 @@ function add() {
   const calculate = function () {
     numberList.push(...arguments);
     return calculate;
-  };
+  }; // 闭包返回数据
 
   // 利用 toString 隐式转换，最后执行时进行转换
   calculate.toString = function () {

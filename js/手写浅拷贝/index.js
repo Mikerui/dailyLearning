@@ -16,7 +16,7 @@ const checkedType = (target) => {
 };
 
 const deepClone = (target) => {
-  const result;
+  let result;
   const targetType = checkedType(target);
   if (targetType === 'Object') {
     result = {};

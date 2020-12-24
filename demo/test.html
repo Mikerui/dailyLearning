@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      body {
+        margin: 0 auto;
+        color: #333;
+        font-size: 14px;
+        padding: 10px;
+      }
+      h1 {
+        font-size: 20px;
+        font-weight: bold;
+        text-align: center;
+        padding-top: 10px;
+        width: 90%;
+        margin: 0 auto 10px;
+        border-bottom: 2px solid #000;
+        padding-bottom: 10px;
+      }
+      h2 {
+        color: #000;
+        font-size: 20px;
+        text-align: center;
+        margin-bottom: 10px;
+      }
+      h3 {
+        font-size: 18px;
+        text-align: center;
+        margin-bottom: 40px;
+        margin-top: 20px;
+        color: #000;
+      }
+      p {
+        line-height: 1.8;
+        text-indent: 25px;
+        text-align-last: left;
+        text-align: justify;
+        margin-bottom: 10px;
+      }
+      .div-p {
+        line-height: 1.8;
+        text-align-last: left;
+        text-align: justify;
+        margin-bottom: 10px;
+      }
+      .div-p div,
+      .div-p span {
+        display: inline-block;
+        vertical-align: middle;
+      }
+      .div-p > div {
+        margin-left: 30px;
+      }
+      .div-p span {
+        width: auto;
+      }
+      p.no-indent {
+        text-indent: 0;
+      }
+      table {
+        width: 97%;
+        margin: 0 auto;
+      }
+      td {
+        height: 40px;
+        white-space: nowrap;
+        overflow: hidden;
+        word-break: keep-all;
+        text-align: left;
+        padding: 4px;
+        vertical-align: middle;
+      }
+      .main {
+        width: 210mm;
+        margin: 0 auto;
+        padding-left: 10mm;
+        padding-right: 10mm;
+      }
+      input {
+        vertical-align: middle;
+        pointer-events: none;
+      }
+      .fill-box {
+        display: inline-block;
+        vertical-align: middle;
+        width: 12px;
+        height: 12px;
+        border: 1px solid #333;
+        margin: 0 5px;
+      }
+      .bold {
+        font-weight: bold;
+      }
+      .center {
+        text-align: center;
+      }
+      .horizontal-line {
+        border-bottom: 1px solid #333;
+        width: 80px;
+        display: inline-flex;
+        align-items: center;
+        text-align: center;
+        justify-content: center;
+      }
+      .td1 > div {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+      }
+
+      .ml10 {
+        margin-left: 0px;
+      }
+      .td-input div {
+        display: flex;
+        align-items: center;
+      }
+      .td-input div input,
+      .td-input div .fill-box {
+        margin-right: 10px;
+        margin-left: 5px;
+      }
+      .td-input div input:last-of-type,
+      .td-input div .fill-box:last-of-type {
+        margin-right: 0;
+      }
+      .td3-input input {
+        margin-right: 5px !important;
+      }
+      .content {
+        clear: both;
+        position: relative;
+      }
+      .content::after {
+        clear: both;
+        display: block;
+        content: '';
+      }
+      .content > div {
+        float: left;
+      }
+      .left {
+        width: 130px;
+        text-align: center;
+      }
+      .center {
+        margin-left: 30px;
+        margin-top: 40px;
+      }
+      .center li {
+        display: flex;
+        margin-bottom: 10px;
+      }
+      .center span {
+        background: yellow;
+        display: block;
+      }
+      .center span:first-child {
+        margin-bottom: 10px;
+      }
+      img {
+        max-width: 100%;
+        margin: 5px 0;
+      }
+      .right {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        text-align: center;
+      }
+      .right div {
+        background-color: yellow;
+        margin-bottom: 10px;
+        display: inline-block;
+      }
+      .date {
+        text-align: right;
+      }
+      .date span {
+        width: 40px;
+        display: inline-block;
+      }
+      .line-hen {
+        border-bottom: 1px dashed #333;
+        position: relative;
+        margin-top: 30px;
+      }
+      .line-hen span {
+        display: block;
+        position: absolute;
+        left: 50%;
+        margin-left: -90px;
+        background: #fff;
+        padding: 0 10px;
+        top: -10px;
+        letter-spacing: 5px;
+        color: #000;
+      }
+      .grade {
+        display: flex;
+      }
+      .grade span {
+        width: 50%;
+      }
+      .autograph {
+        text-align: right;
+      }
+      .autograph span {
+        width: 200px;
+        display: inline-block;
+        vertical-align: middle;
+        text-align: left;
+        margin-top: 10px;
+      }
+      h5 {
+        font-size: 16px;
+        color: #000;
+        margin-top: 10px;
+      }
+      .chapter {
+        position: absolute;
+        right: 0;
+        bottom: -40px;
+        display: flex;
+        align-items: center;
+      }
+      .chapter img {
+        width: 150px;
+        margin: 0 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main">
+      <h1>儿 童 青 少 年 视 力 健 康 管 理</h1>
+      <h2>学生视力健康监测结果反馈</h2>
+      <p class="no-indent">同学家长：</p>
+      <p>
+        您好!作为孩子的监护人，家长应该从小培养孩子良好的用眼习惯，督促孩子日常用眼卫生，定期检查视力，进行近视预警，做到早发现早干预，担负起保护孩子视力健康的责任。根据市教育局工作安排，已委托近视监测机构在校为您的孩子进行了视力状况监测，现将监测结果及干预建议反馈如下：
+      </p>
+      <table
+        border="1"
+        bordercolor="#000000"
+        style="border-collapse: collapse"
+        width="100%"
+      >
+        <tbody>
+          <tr>
+            <td colspan="2" class="bold center">视力监测结果</td>
+            <td colspan="2" class="bold center">视力监测预警</td>
+          </tr>
+          <tr>
+            <td width="100px">裸眼视力</td>
+            <td class="td1">
+              <div>
+                <div>
+                  <span>右</span>
+                  <div class="horizontal-line">250</div>
+                </div>
+                <div>
+                  <span class="ml10">左</span>
+                  <div class="horizontal-line">0</div>
+                </div>
+              </div>
+            </td>
+            <td colspan="2" class="td-input td3-input">
+              <div>
+                视力正常
+                <div class="fill-box"></div>
+                :请您引导孩子继续保持良好用眼习惯
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>戴镜视力</td>
+            <td class="td1">
+              <div>
+                <div>
+                  <span>右</span>
+                  <div class="horizontal-line">250</div>
+                </div>
+                <div>
+                  <span class="ml10">左</span>
+                  <div class="horizontal-line">0</div>
+                </div>
+              </div>
+            </td>
+            <td colspan="2" class="td-input">
+              <div>
+                视力低下：轻度
+                <div class="fill-box"></div>
+                中度
+                <div class="fill-box"></div>
+                重度
+                <div class="fill-box"></div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="4">
+              ✩
+              儿童视力正常值3~4岁为4.7~4.8；4~5岁为4.8~4.9；5~6岁为4.9~5.0；7岁以上为5.0。
+            </td>
+          </tr>
+          <tr>
+            <td colspan="4">
+              ✩
+              视力监测结果易受环境等多种因素（检测环境、眼睛的疲劳程度等）影响，具有一定波动性。
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <br />
+      <div class="div-p no-indent">
+        <div class="fill-box"></div>
+        <span class="bold">干预建议：</span
+        >近视可防可控但不可治，建议家长全面了解近视防控有关知识。加强视觉环境和行为干预。
+        为学生提供良好的视觉环境，督促学生及时纠正不正确用眼行为习惯，控制近距离用眼时间(特别是玩智能手机、
+        平板电脑等电子产品的时间)，加强有益于眼肌锻炼的体育运动，提高眼睛抵御近视能力。
+      </div>
+      <div class="div-p no-indent">
+        <div class="fill-box"></div>
+        <span class="bold">特别提示:</span
+        >本次监测结果显示视力不良的学生一定要定期到近视监测机构或其他专业机构（3个月一次）复查视力，并正确干预。如果近视年递增度较快，则应通过眼生物与眼生理检测，全面了解眼发育与眼生理状况，对干预效果进行评估，找出近视发展的症结，针对性采取综合干预措施和实施全过程的管理，减缓近视增长，降低并发症风险，实现“慢近视”、“低近视”
+        的目标。
+      </div>
+      <p class="bold">
+        关注微信公众号，进入中小学生视力健康管理档案平台，查询孩子的视力健康状况,获取学生视力健康管理相
+        关知识，咨询针对性的干预方法。
+      </p>
+      <div class="content">
+        <div class="left">
+          扫一扫查看视力报告
+          <img src="./code.png" alt="" />
+          <div>xxxx学校 xxx年级</div>
+          <div>xxx班级 xxx 姓名</div>
+        </div>
+        <div class="center">
+          <ul>
+            <li>
+              <div>近视监测机构：</div>
+              <div>
+                <span>新余市近视防控学会（简称：新余视防）</span>
+                <span>新余市近视防控学会（简称：新余视防）</span>
+              </div>
+            </li>
+            <li>
+              <div>地址：</div>
+              <div><span>劳动南路 3 号海通证券旁（新华书店对面）</span></div>
+            </li>
+            <li>
+              <div>咨询电话:</div>
+              <div><span>0790-628778</span></div>
+            </li>
+          </ul>
+          <div class="right">
+            <div>新余市教育局</div>
+            <br />
+            <div>新余市青少年近视防控学会</div>
+            <br />
+            <div>新余市儿童青少年视力健康管理中心</div>
+          </div>
+        </div>
+        <div class="chapter">
+          <img src="./zhang.jpg" alt="" />
+          <img src="./zhang.jpg" alt="" />
+          <img src="./zhang.jpg" alt="" />
+        </div>
+      </div>
+      <div class="date">年<span></span>月<span></span>日</div>
+      <div class="line-hen"><span>请 沿 虚 线 撕 开</span></div>
+      <h3>回 执 单</h3>
+      <table
+        border="1"
+        bordercolor="#000000"
+        style="border-collapse: collapse"
+        width="100%"
+      >
+        <tbody>
+          <tr>
+            <td>学校：</td>
+            <td>
+              <div class="grade">
+                <span>年级：</span>
+                <span>班级：</span>
+              </div>
+            </td>
+            <td>学生姓名：</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              已认真阅读《反馈单》内容，知晓本次学生视力监测结果。可主动落实家庭责任，能自主参与学生视力健康管理。
+              <div class="autograph">
+                <span>家长签名： </span>
+                <span>日期：</span>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <h5>
+        提示：盖有市教育局、专门机构单位印章的“反馈单”方为政府组织统一监测反馈的结果。
+      </h5>
+    </div>
+  </body>
+</html>

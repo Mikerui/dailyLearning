@@ -17,11 +17,11 @@
     <link rel="stylesheet" href="http://api.map.baidu.com/library/SearchInfoWindow/1.4/src/SearchInfoWindow_min.css" />
     <link rel="stylesheet" href="./style.css">
    
-    <title>地图</title>
+    <title>老虎潭</title>
 </head>
 
 <body>
-    <h1>老虎潭水库及支流问题</h1>
+    <h1>老虎潭及其支流问题清单</h1>
     <div class="box">
         <div class="left">
             <div id="eCharts"></div>
@@ -469,9 +469,9 @@ new BMap.Point( 119.939299,  30.689492),
 	    message:""
 	}
     var infoWindow = new BMap.InfoWindow(`
-    <div>1.无机物超标</div>
-    <div>2.有机物超标</div>
-    <div>3.湖内漂浮物过量</div>
+    <a href="http://lbsyun.baidu.com/">1.无机物超标</a><br>
+    <a>2.有机物超标</a><br>
+    <a>3.湖内漂浮物过量</a>
     `, opts);  // 创建信息窗口对象 
 const moveEvts = ['mouseover', 'mouseout'];
 for (let i = 0; i < moveEvts.length; i++) {

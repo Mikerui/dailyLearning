@@ -4,7 +4,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-    <script src="https://cdn.bootcss.com/echarts/3.7.0/echarts.min.js"></script>
+   
     <script type="text/javascript"
         src="http://api.map.baidu.com/api?v=2.0&ak=9IhuKwn2sTbKBbxZEtAVNEcvhRzeIAdZ"></script>
     <!--加载鼠标绘制工具-->
@@ -16,17 +16,12 @@
         src="http://api.map.baidu.com/library/SearchInfoWindow/1.4/src/SearchInfoWindow_min.js"></script>
     <link rel="stylesheet" href="http://api.map.baidu.com/library/SearchInfoWindow/1.4/src/SearchInfoWindow_min.css" />
     <link rel="stylesheet" href="./style.css">
-   
     <title>地图</title>
 </head>
 
 <body>
-    <h1>老虎潭水库及支流问题</h1>
-    <div class="box">
-        <div class="left">
-            <div id="eCharts"></div>
-            <div id="columnar"></div>
-        </div>
+    <div>
+        
         <div id="allmap" style="overflow:hidden;zoom:1;position:relative;">
             <div id="map"
                 style="height:100%;-webkit-transition: all 0.5s ease-in-out;transition: all 0.5s ease-in-out;">
@@ -42,6 +37,7 @@
             </div>
 
         </div>
+
         <div id="result">
             <dl>
                 <dt>绘制工具功能</dt>
@@ -113,7 +109,7 @@
             // 
             var map = new BMap.Map('map', { mapType: BMAP_HYBRID_MAP });
             var poi = new BMap.Point(119.979974, 30.676728);
-            map.centerAndZoom(poi, 15);
+            map.centerAndZoom(poi, 16);
             map.enableScrollWheelZoom();
             $("getLastOverLay").onclick = function () {
                 if (overlays.length) {
@@ -179,7 +175,7 @@
             //实例化鼠标绘制工具
             var drawingManager = new BMapLib.DrawingManager(map, {
                 isOpen: false, //是否开启绘制模式
-                enableDrawingTool: true, //是否显示工具栏
+                enableDrawingTool: false, //是否显示工具栏
                 drawingToolOptions: {
                     anchor: BMAP_ANCHOR_TOP_RIGHT, //位置
                     offset: new BMap.Size(5, 5), //偏离值
@@ -310,188 +306,9 @@
             });  //创建多边形
             map.addOverlay(block3);   //增加多边形
 
-             // 支流一
-             var tributary1 = new BMap.Polygon([
-             new BMap.Point( 119.985723, 30.674833),
-new BMap.Point( 119.987376, 30.677132),
-new BMap.Point( 119.989388, 30.679306),
-new BMap.Point( 119.991472, 30.679244),
-new BMap.Point( 119.998731, 30.679741),
-new BMap.Point( 120.001893, 30.679119),
-new BMap.Point( 120.00527, 30.678809),
-new BMap.Point( 120.005342, 30.678312),
-new BMap.Point( 120.001246, 30.678498),
-new BMap.Point( 119.999377, 30.678871),
-new BMap.Point( 119.996934, 30.678933),
-new BMap.Point( 119.99255, 30.67856),
-new BMap.Point( 119.990538, 30.678436),
-new BMap.Point( 119.989676, 30.678001),
-new BMap.Point( 119.988238, 30.676448),
-new BMap.Point( 119.986729, 30.674656),
-            ], {
-                strokeColor: "#FFB6C1",    //边线颜色。    
-                fillColor: "#FFB6C1",      //填充颜色。当参数为空时，圆形将没有填充效果。    
-                strokeWeight: 3,       //边线的宽度，以像素为单位。    
-                strokeOpacity: 0.8,    //边线透明度，取值范围0 - 1。    
-                fillOpacity: 0.8,      //填充的透明度，取值范围0 - 1。    
-                strokeStyle: 'solid'//边线的样式，solid或dashed。
-            });  //创建多边形
-            map.addOverlay(tributary1);   //增加多边形
-
-
-            // 支流二
-            var tributary2 = new BMap.Polygon([
-             new BMap.Point(119.982633,  30.674833),
-new BMap.Point(119.97904,  30.673901),
-new BMap.Point(119.977171,  30.672721),
-new BMap.Point(119.975231,  30.668683),
-new BMap.Point(119.973434,  30.665577),
-new BMap.Point(119.975231,  30.665825),
-new BMap.Point(119.976596,  30.668497),
-new BMap.Point(119.977818,  30.670485),
-new BMap.Point(119.979255,  30.672162),
-new BMap.Point(119.98019,  30.672659),
-new BMap.Point( 119.981914,  30.673404),
-new BMap.Point( 119.983495,  30.67415),
-new BMap.Point( 119.983567,  30.67446),
-new BMap.Point( 119.982633,  30.674833),
-new BMap.Point( 119.982633,  30.674833),
-            ], {
-                strokeColor: "#E6E6FA",    //边线颜色。    
-                fillColor: "#E6E6FA",      //填充颜色。当参数为空时，圆形将没有填充效果。    
-                strokeWeight: 3,       //边线的宽度，以像素为单位。    
-                strokeOpacity: 0.8,    //边线透明度，取值范围0 - 1。    
-                fillOpacity: 0.8,      //填充的透明度，取值范围0 - 1。    
-                strokeStyle: 'solid'//边线的样式，solid或dashed。
-            });  //创建多边形
-            map.addOverlay(tributary2);   //增加多边形
-
-
-                  // 支流三
-            var tributary3 = new BMap.Polygon([
-new BMap.Point(119.989029,  30.672286),
-new BMap.Point(119.991257,  30.67241),
-new BMap.Point(119.993269,  30.672162), 
-new BMap.Point(119.998803,  30.671976),
-new BMap.Point(120.000743,  30.671603),
-new BMap.Point(120.003905,  30.67123),
-new BMap.Point(120.005558,  30.67036),
-new BMap.Point(120.005055,  30.67005),
-new BMap.Point(120.004983,  30.669801),
-new BMap.Point(120.004264,  30.67005),
-new BMap.Point( 120.003617,  30.670236),
-new BMap.Point( 120.001821,  30.670733),
-new BMap.Point( 119.998299,  30.671354),
-new BMap.Point( 119.997293,  30.671665),
-new BMap.Point( 119.996503,  30.671541),
-new BMap.Point( 119.993772,  30.671603),
-new BMap.Point( 119.992191,  30.671976),
-new BMap.Point( 119.989963,  30.671665),
-new BMap.Point( 119.989245,  30.671603),
-new BMap.Point( 119.988885,  30.671851),
-            ], {
-                strokeColor: "#ADD8E6",    //边线颜色。    
-                fillColor: "#ADD8E6",      //填充颜色。当参数为空时，圆形将没有填充效果。    
-                strokeWeight: 3,       //边线的宽度，以像素为单位。    
-                strokeOpacity: 0.8,    //边线透明度，取值范围0 - 1。    
-                fillOpacity: 0.8,      //填充的透明度，取值范围0 - 1。    
-                strokeStyle: 'solid'//边线的样式，solid或dashed。
-            });  //创建多边形
-            map.addOverlay(tributary3);   //增加多边形
-
-
-      // 老虎潭
-            var tributary4 = new BMap.Polygon([
-new BMap.Point(119.936784,  30.690362),
-new BMap.Point(119.938868,  30.687008),
-new BMap.Point(119.940592,  30.688126),
-new BMap.Point(119.942964,  30.686635),
-new BMap.Point(119.946198,  30.686573),
-new BMap.Point(119.948138,  30.684151),
-new BMap.Point(119.947491,  30.679057),
-new BMap.Point(119.945623,  30.676945),
-new BMap.Point(119.944904,  30.675765),
-new BMap.Point(119.942245,  30.675703),
-new BMap.Point( 119.941095,  30.677442),
-new BMap.Point( 119.940592,  30.675703),
-new BMap.Point( 119.940736,  30.67328),
-new BMap.Point( 119.94052,  30.668807),
-new BMap.Point( 119.941095,  30.66539),
-new BMap.Point( 119.94591,  30.664272),
-new BMap.Point( 119.946054,  30.661538),
-new BMap.Point( 119.947348,  30.657935),
-new BMap.Point( 119.944329,  30.656817),
-new BMap.Point( 119.943036,  30.65868),
-new BMap.Point( 119.940736,  30.656941),
-new BMap.Point( 119.936999,  30.654704),
-new BMap.Point( 119.934268,  30.653461),
-new BMap.Point( 119.929381,  30.648242),
-new BMap.Point( 119.932687,  30.646626),
-new BMap.Point( 119.935274,  30.647869),
-new BMap.Point( 119.939155,  30.653089),
-new BMap.Point( 119.943179,  30.653834),
-new BMap.Point( 119.947635,  30.65458),
-new BMap.Point( 119.950797,  30.656319),
-new BMap.Point( 119.95324,  30.65868),
-new BMap.Point( 119.956259,  30.657314),
-new BMap.Point( 119.957409,  30.657065),
-new BMap.Point( 119.957121,  30.660793),
-new BMap.Point( 119.954678,  30.664521),
-new BMap.Point( 119.957552,  30.667875),
-new BMap.Point( 119.957984,  30.670733),
-new BMap.Point( 119.954103,  30.677815),
-new BMap.Point( 119.954534,  30.684027),
-new BMap.Point( 119.953815,  30.687753),
-new BMap.Point( 119.952809,  30.687008),
-new BMap.Point( 119.949216,  30.68676),
-new BMap.Point( 119.94706,  30.690114),
-new BMap.Point( 119.946341,  30.691107),
-new BMap.Point( 119.946341,  30.688126),
-new BMap.Point( 119.941455,  30.688374),
-new BMap.Point( 119.939442,  30.689492),
-new BMap.Point( 119.939299,  30.689492),
-            ], {
-                strokeColor: "#ADD8E600",    //边线颜色。    
-                fillColor: "#ADD8E600",      //填充颜色。当参数为空时，圆形将没有填充效果。    
-                strokeWeight: 3,       //边线的宽度，以像素为单位。    
-                strokeOpacity: 0,    //边线透明度，取值范围0 - 1。    
-                fillOpacity: 0,      //填充的透明度，取值范围0 - 1。    
-                strokeStyle: 'solid'//边线的样式，solid或dashed。
-            });  //创建多边形
-            map.addOverlay(tributary4);   //增加多边形
-
-
-// 覆盖物事件
-	var opts = {
-	    width : 200,     // 信息窗口宽度
-	    height: 100,     // 信息窗口高度
-	    title : "老虎潭水库问题信息" , // 信息窗口标题
-	    message:""
-	}
-    var infoWindow = new BMap.InfoWindow(`
-    <div>1.无机物超标</div>
-    <div>2.有机物超标</div>
-    <div>3.湖内漂浮物过量</div>
-    `, opts);  // 创建信息窗口对象 
-const moveEvts = ['mouseover', 'mouseout'];
-for (let i = 0; i < moveEvts.length; i++) {
-    const event = moveEvts[i];
-     tributary4.addEventListener(event, e => {
-            switch (event) {
-                case 'mouseover':
-                console.log(1)
-                    map.openInfoWindow(infoWindow, new BMap.Point(119.950402,30.669295)); //开启信息窗口
-                    break;
-                case 'mouseout':
-                    // overlay.setFillColor('#fff');
-                    break;
-            }
-        });
-}
         </script>
- <script src="./echartsOptions.js"></script>
+
 </body>
 
 </html>
-
 

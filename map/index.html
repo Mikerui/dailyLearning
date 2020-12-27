@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+   
+    <script type="text/javascript"
+        src="http://api.map.baidu.com/api?v=2.0&ak=9IhuKwn2sTbKBbxZEtAVNEcvhRzeIAdZ"></script>
+    <!--加载鼠标绘制工具-->
+    <script type="text/javascript"
+        src="http://api.map.baidu.com/library/DrawingManager/1.4/src/DrawingManager_min.js"></script>
+    <link rel="stylesheet" href="http://api.map.baidu.com/library/DrawingManager/1.4/src/DrawingManager_min.css" />
+    <!--加载检索信息窗口-->
+    <script type="text/javascript"
+        src="http://api.map.baidu.com/library/SearchInfoWindow/1.4/src/SearchInfoWindow_min.js"></script>
+    <link rel="stylesheet" href="http://api.map.baidu.com/library/SearchInfoWindow/1.4/src/SearchInfoWindow_min.css" />
+    <link rel="stylesheet" href="./style.css">
+    <title>地图</title>
+</head>
+
+<body>
+    <div>
+        <div id="allmap" style="overflow:hidden;zoom:1;position:relative;">
+            <div id="map"
+                style="height:100%;-webkit-transition: all 0.5s ease-in-out;transition: all 0.5s ease-in-out;">
+            </div>
+            <div id="showPanelBtn">
+
+                <div id="panelWrap"
+                    style="width:0px;position:absolute;top:0px;right:0px;height:100%;overflow:auto;-webkit-transition: all 0.5s ease-in-out;transition: all 0.5s ease-in-out;">
+                    <div style="width:20px;height:200px;margin:-100px 0 0 -10px;color:#999;position:absolute;opacity:0.5;top:50%;left:50%;"
+                        id="showOverlayInfo">此处用于展示覆盖物信息</div>
+                    <div id="panel" style="position:absolute;"></div>
+                </div>
+            </div>
+
+        </div>
+        <div id="result">
+            <dl>
+                <dt>绘制工具功能</dt>
+                <ul>
+                    <li><label><input type="radio" name="openClose1" οnclick="drawingManager.open()" />打开</label>
+                        <label><input type="radio" name="openClose1" οnclick="drawingManager.close()"
+                                checked="checked" />关闭</label>
+                    </li>
+                </ul>
+                </dd>
+                <dt>是否进行线或面积的计算(单位米)</dt>
+                <ul>
+                    <li><label><input type="radio" name="openClose"
+                                οnclick="drawingManager.enableCalculate()" />打开</label> <label><input type="radio"
+                                name="openClose" οnclick="drawingManager.disableCalculate()"
+                                checked="checked" />关闭</label></li>
+                </ul>
+                </dd>
+                <dt>绘制功能</dt>
+                <dd>
+                    <ul>
+                        <li>
+                            <label><input type="radio" name="drawmode"
+                                    οnclick="drawingManager.setDrawingMode(BMAP_DRAWING_MARKER)"
+                                    checked="checked" />画点</label>
+                            <input type="checkbox" id="isInfowindow" /> 是否带信息窗口
+                        </li>
+                        <li>
+                            <label><input type="radio" name="drawmode"
+                                    οnclick="drawingManager.setDrawingMode(BMAP_DRAWING_CIRCLE)" />画圆</label>
+                        </li>
+                        <li>
+                            <label><input type="radio" name="drawmode"
+                                    οnclick="drawingManager.setDrawingMode(BMAP_DRAWING_POLYLINE)" />画线</label>
+                        </li>
+                        <li>
+                            <label><input type="radio" name="drawmode"
+                                    οnclick="drawingManager.setDrawingMode(BMAP_DRAWING_POLYGON)" />画多边形</label>
+                        </li>
+                        <li>
+                            <label><input type="radio" name="drawmode"
+                                    οnclick="drawingManager.setDrawingMode(BMAP_DRAWING_RECTANGLE)" />画矩形</label>
+                        </li>
+                    </ul>
+                </dd>
+                <dt>覆盖物操作</dt>
+                <dd>
+                    <ul>
+                        <li>
+                            <input type="button" value="获取绘制的覆盖物个数" οnclick="alert(overlays.length)" />
+                            <input type="button" value="清除所有覆盖物" οnclick="clearAll()" />
+                            <input type="button" value="获取最后一个覆盖物信息" id="getLastOverLay" />
+                        </li>
+                    </ul>
+                </dd>
+            </dl>
+
+        </div>
+
+        <div class="pop">
+            <div><span style="background-color: red;"></span> 区块一</div>
+            <div><span style="background-color: #ffb6c1;"></span> 区块二</div>
+            <div><span style="background-color: blue;"></span> 区块三</div>
+        </div>
+
+        <script type="text/javascript">
+
+            // 百度地图API功能
+            // 
+            var map = new BMap.Map('map', { mapType: BMAP_HYBRID_MAP });
+            var poi = new BMap.Point(119.979974, 30.676728);
+            map.centerAndZoom(poi, 16);
+            map.enableScrollWheelZoom();
+            $("getLastOverLay").onclick = function () {
+                if (overlays.length) {
+                    console.log(overlays[overlays.length - 1]);
+                } else {
+                    alert("没有覆盖物");
+                }
+            }
+
+            //信息窗口的内容定义
+            var content = '<div style="margin:0;line-height:20px;padding:2px;">' +
+                '地址：北京市海淀区上地十街10号<br/>电话：(010)59928888<br/>简介：百度大厦位于北京市海淀区西二旗地铁站附近，为百度公司综合研发及办公总部。' +
+                '</div>';
+
+            //创建带信息窗口的poi点
+            var searchInfoWindow = new BMapLib.SearchInfoWindow(map, content, {
+                title: "百度大厦",      //标题
+                width: 290,             //宽度
+                height: 105,              //高度
+                panel: "panel",         //检索结果面板
+                enableAutoPan: true,     //自动平移
+                searchTypes: [
+                    BMAPLIB_TAB_SEARCH,   //周边检索
+                    BMAPLIB_TAB_TO_HERE,  //到这里去
+                    BMAPLIB_TAB_FROM_HERE //从这里出发
+                ]
+            });
+
+            var overlays = [];
+            //回调获得覆盖物信息
+            var overlaycomplete = function (e) {
+                overlays.push(e.overlay);
+                console.log(overlays, 'dd')
+                var result = "";
+                result = "<p>";
+                result += e.drawingMode + ":";
+                if (e.drawingMode == BMAP_DRAWING_MARKER) {
+                    result += ' 坐标：' + e.overlay.getPosition().lng + ',' + e.overlay.getPosition().lat;
+                    if ($('isInfowindow').checked) {
+                        searchInfoWindow.open(e.overlay);
+                    }
+                }
+                if (e.drawingMode == BMAP_DRAWING_CIRCLE) {
+                    result += ' 半径：' + e.overlay.getRadius();
+                    result += ' 中心点：' + e.overlay.getCenter().lng + "," + e.overlay.getCenter().lat;
+                }
+                if (e.drawingMode == BMAP_DRAWING_POLYLINE || e.drawingMode == BMAP_DRAWING_POLYGON || e.drawingMode == BMAP_DRAWING_RECTANGLE) {
+                    result += ' 所画的点个数：' + e.overlay.getPath().length;
+                }
+                result += "</p>";
+                $("showOverlayInfo").style.display = "none";
+                $("panel").innerHTML += result; //将绘制的覆盖物信息结果输出到结果面板
+            };
+
+            var styleOptions = {
+                strokeColor: "red",    //边线颜色。
+                fillColor: "red",      //填充颜色。当参数为空时，圆形将没有填充效果。
+                strokeWeight: 3,       //边线的宽度，以像素为单位。
+                strokeOpacity: 0.8,	   //边线透明度，取值范围0 - 1。
+                fillOpacity: 0.6,      //填充的透明度，取值范围0 - 1。
+                strokeStyle: 'solid' //边线的样式，solid或dashed。
+            }
+            //实例化鼠标绘制工具
+            var drawingManager = new BMapLib.DrawingManager(map, {
+                isOpen: false, //是否开启绘制模式
+                enableDrawingTool: false, //是否显示工具栏
+                drawingToolOptions: {
+                    anchor: BMAP_ANCHOR_TOP_RIGHT, //位置
+                    offset: new BMap.Size(5, 5), //偏离值
+                    scale: 0.8 //工具栏缩放比例
+                },
+                circleOptions: styleOptions, //圆的样式
+                polylineOptions: styleOptions, //线的样式
+                polygonOptions: styleOptions, //多边形的样式
+                rectangleOptions: styleOptions //矩形的样式
+            });
+
+
+            //添加鼠标绘制工具监听事件，用于获取绘制结果
+            drawingManager.addEventListener('overlaycomplete', overlaycomplete);
+
+
+            function $(id) {
+                return document.getElementById(id);
+            }
+
+            function clearAll() {
+                for (var i = 0; i < overlays.length; i++) {
+                    map.removeOverlay(overlays[i]);
+                }
+                overlays.length = 0
+            }
+
+            var isPanelShow = false;
+            //显示结果面板动作
+            $("showPanelBtn").onclick = showPanel;
+            function showPanel() {
+                if (isPanelShow == false) {
+                    isPanelShow = true;
+                    $("showPanelBtn").style.right = "230px";
+                    $("panelWrap").style.width = "230px";
+                    $("map").style.marginRight = "230px";
+                    $("showPanelBtn").innerHTML = "隐藏绘制结果信息<br/>>";
+                } else {
+                    isPanelShow = false;
+                    $("showPanelBtn").style.right = "0px";
+                    $("panelWrap").style.width = "0px";
+                    $("map").style.marginRight = "0px";
+                    $("showPanelBtn").innerHTML = "显示绘制结果信息<br/><";
+                }
+            }
+
+            // 河流
+            var polygon = new BMap.Polygon([
+                new BMap.Point(119.958335, 30.670198),
+                new BMap.Point(119.957832, 30.670695),
+                new BMap.Point(119.959089, 30.671286),
+                new BMap.Point(119.961353, 30.673273),
+                new BMap.Point(119.965665, 30.676131),
+                new BMap.Point(119.969007, 30.677932),
+                new BMap.Point(119.974792, 30.679268),
+                new BMap.Point(119.976049, 30.679454),
+                new BMap.Point(119.979499, 30.67815),
+                new BMap.Point(119.987512, 30.673802),
+                new BMap.Point(119.988985, 30.672373),
+                new BMap.Point(119.988195, 30.670292),
+                new BMap.Point(119.99265, 30.668366),
+                new BMap.Point(119.992399, 30.668148),
+                new BMap.Point(119.988087, 30.670105),
+                new BMap.Point(119.988159, 30.672683),
+                new BMap.Point(119.982805, 30.674827),
+                new BMap.Point(119.980757, 30.676939),
+                new BMap.Point(119.977702, 30.678554),
+                new BMap.Point(119.975439, 30.679051),
+                new BMap.Point(119.972492, 30.678274),
+                new BMap.Point(119.969007, 30.677684),
+                new BMap.Point(119.966132, 30.67551),
+                new BMap.Point(119.964156, 30.674733),
+                new BMap.Point(119.961856, 30.673025),
+            ], { strokeColor: "yellow", fillColor: "yellow", strokeWeight: 2, strokeOpacity: 0.5 });  //创建多边形
+            map.addOverlay(polygon);   //增加多边形
+
+            // 区块一
+            var block1 = new BMap.Polygon([
+                new BMap.Point(119.96084, 30.674786),
+                new BMap.Point(119.959619, 30.676681),
+                new BMap.Point(119.961128, 30.679135),
+                new BMap.Point(119.963607, 30.67957),
+                new BMap.Point(119.964793, 30.680688),
+                new BMap.Point(119.966518, 30.680035),
+                new BMap.Point(119.967416, 30.680377),
+                new BMap.Point(119.968853, 30.680253),
+                new BMap.Point(119.970686, 30.679414),
+                new BMap.Point(119.970614, 30.679352),
+            ], {
+                strokeColor: "red",    //边线颜色。    
+                fillColor: "red",      //填充颜色。当参数为空时，圆形将没有填充效果。    
+                strokeWeight: 3,       //边线的宽度，以像素为单位。    
+                strokeOpacity: 0.8,    //边线透明度，取值范围0 - 1。    
+                fillOpacity: 0.6,      //填充的透明度，取值范围0 - 1。    
+                strokeStyle: 'solid'//边线的样式，solid或dashed。
+            });  //创建多边形
+            map.addOverlay(block1);   //增加多边形
+            // 区块二
+            var block2 = new BMap.Polygon([
+                new BMap.Point(119.964146, 30.6746), new BMap.Point(119.964074, 30.673264),
+                new BMap.Point(119.966015, 30.672581),
+                new BMap.Point(119.967883, 30.674755),
+                new BMap.Point(119.967883, 30.674755),
+            ], {
+                strokeColor: "#ffb6c1",    //边线颜色。    
+                fillColor: "#ffb6c1",      //填充颜色。当参数为空时，圆形将没有填充效果。    
+                strokeWeight: 3,       //边线的宽度，以像素为单位。    
+                strokeOpacity: 0.8,    //边线透明度，取值范围0 - 1。    
+                fillOpacity: 0.8,      //填充的透明度，取值范围0 - 1。    
+                strokeStyle: 'solid'//边线的样式，solid或dashed。
+            });  //创建多边形
+            map.addOverlay(block2);   //增加多边形
+
+            // 区块三
+            var block3 = new BMap.Polygon([
+                new BMap.Point(119.971827, 30.675066),
+                new BMap.Point(119.97215, 30.677768),
+                new BMap.Point(119.97657, 30.678203),
+                new BMap.Point(119.977037, 30.674973),
+                new BMap.Point(119.977037, 30.674973),
+            ], {
+                strokeColor: "blue",    //边线颜色。    
+                fillColor: "blue",      //填充颜色。当参数为空时，圆形将没有填充效果。    
+                strokeWeight: 3,       //边线的宽度，以像素为单位。    
+                strokeOpacity: 0.8,    //边线透明度，取值范围0 - 1。    
+                fillOpacity: 0.8,      //填充的透明度，取值范围0 - 1。    
+                strokeStyle: 'solid'//边线的样式，solid或dashed。
+            });  //创建多边形
+            map.addOverlay(block3);   //增加多边形
+
+        </script>
+
+</body>
+
+</html>
+

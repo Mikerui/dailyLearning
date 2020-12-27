@@ -23,10 +23,6 @@
 <body>
     <h1>老虎潭及其支流问题清单</h1>
     <div class="box">
-        <div class="left">
-            <div id="eCharts"></div>
-            <div id="columnar"></div>
-        </div>
         <div id="allmap" style="overflow:hidden;zoom:1;position:relative;">
             <div id="map"
                 style="height:100%;-webkit-transition: all 0.5s ease-in-out;transition: all 0.5s ease-in-out;">
@@ -101,11 +97,11 @@
 
         </div>
 
-        <div class="pop">
+        <!-- <div class="pop">
             <div><span style="background-color: red;"></span> 区块一</div>
             <div><span style="background-color: #ffb6c1;"></span> 区块二</div>
             <div><span style="background-color: blue;"></span> 区块三</div>
-        </div>
+        </div> -->
 
         <script type="text/javascript">
 
@@ -269,8 +265,8 @@
                 new BMap.Point(119.970686, 30.679414),
                 new BMap.Point(119.970614, 30.679352),
             ], {
-                strokeColor: "red",    //边线颜色。    
-                fillColor: "red",      //填充颜色。当参数为空时，圆形将没有填充效果。    
+                strokeColor: "#ADD8E6",    //边线颜色。    
+                fillColor: "#ADD8E6",      //填充颜色。当参数为空时，圆形将没有填充效果。    
                 strokeWeight: 3,       //边线的宽度，以像素为单位。    
                 strokeOpacity: 0.8,    //边线透明度，取值范围0 - 1。    
                 fillOpacity: 0.6,      //填充的透明度，取值范围0 - 1。    
@@ -390,8 +386,8 @@ new BMap.Point( 119.989963,  30.671665),
 new BMap.Point( 119.989245,  30.671603),
 new BMap.Point( 119.988885,  30.671851),
             ], {
-                strokeColor: "#ADD8E6",    //边线颜色。    
-                fillColor: "#ADD8E6",      //填充颜色。当参数为空时，圆形将没有填充效果。    
+                strokeColor: "red",    //边线颜色。    
+                fillColor: "red",      //填充颜色。当参数为空时，圆形将没有填充效果。    
                 strokeWeight: 3,       //边线的宽度，以像素为单位。    
                 strokeOpacity: 0.8,    //边线透明度，取值范围0 - 1。    
                 fillOpacity: 0.8,      //填充的透明度，取值范围0 - 1。    
@@ -399,88 +395,23 @@ new BMap.Point( 119.988885,  30.671851),
             });  //创建多边形
             map.addOverlay(tributary3);   //增加多边形
 
-
-      // 老虎潭
-            var tributary4 = new BMap.Polygon([
-new BMap.Point(119.936784,  30.690362),
-new BMap.Point(119.938868,  30.687008),
-new BMap.Point(119.940592,  30.688126),
-new BMap.Point(119.942964,  30.686635),
-new BMap.Point(119.946198,  30.686573),
-new BMap.Point(119.948138,  30.684151),
-new BMap.Point(119.947491,  30.679057),
-new BMap.Point(119.945623,  30.676945),
-new BMap.Point(119.944904,  30.675765),
-new BMap.Point(119.942245,  30.675703),
-new BMap.Point( 119.941095,  30.677442),
-new BMap.Point( 119.940592,  30.675703),
-new BMap.Point( 119.940736,  30.67328),
-new BMap.Point( 119.94052,  30.668807),
-new BMap.Point( 119.941095,  30.66539),
-new BMap.Point( 119.94591,  30.664272),
-new BMap.Point( 119.946054,  30.661538),
-new BMap.Point( 119.947348,  30.657935),
-new BMap.Point( 119.944329,  30.656817),
-new BMap.Point( 119.943036,  30.65868),
-new BMap.Point( 119.940736,  30.656941),
-new BMap.Point( 119.936999,  30.654704),
-new BMap.Point( 119.934268,  30.653461),
-new BMap.Point( 119.929381,  30.648242),
-new BMap.Point( 119.932687,  30.646626),
-new BMap.Point( 119.935274,  30.647869),
-new BMap.Point( 119.939155,  30.653089),
-new BMap.Point( 119.943179,  30.653834),
-new BMap.Point( 119.947635,  30.65458),
-new BMap.Point( 119.950797,  30.656319),
-new BMap.Point( 119.95324,  30.65868),
-new BMap.Point( 119.956259,  30.657314),
-new BMap.Point( 119.957409,  30.657065),
-new BMap.Point( 119.957121,  30.660793),
-new BMap.Point( 119.954678,  30.664521),
-new BMap.Point( 119.957552,  30.667875),
-new BMap.Point( 119.957984,  30.670733),
-new BMap.Point( 119.954103,  30.677815),
-new BMap.Point( 119.954534,  30.684027),
-new BMap.Point( 119.953815,  30.687753),
-new BMap.Point( 119.952809,  30.687008),
-new BMap.Point( 119.949216,  30.68676),
-new BMap.Point( 119.94706,  30.690114),
-new BMap.Point( 119.946341,  30.691107),
-new BMap.Point( 119.946341,  30.688126),
-new BMap.Point( 119.941455,  30.688374),
-new BMap.Point( 119.939442,  30.689492),
-new BMap.Point( 119.939299,  30.689492),
-            ], {
-                strokeColor: "#ADD8E600",    //边线颜色。    
-                fillColor: "#ADD8E600",      //填充颜色。当参数为空时，圆形将没有填充效果。    
-                strokeWeight: 3,       //边线的宽度，以像素为单位。    
-                strokeOpacity: 0,    //边线透明度，取值范围0 - 1。    
-                fillOpacity: 0,      //填充的透明度，取值范围0 - 1。    
-                strokeStyle: 'solid'//边线的样式，solid或dashed。
-            });  //创建多边形
-            map.addOverlay(tributary4);   //增加多边形
-
-
 // 覆盖物事件
 	var opts = {
 	    width : 200,     // 信息窗口宽度
 	    height: 100,     // 信息窗口高度
-	    title : "老虎潭水库问题信息" , // 信息窗口标题
+	    title : "问题溯源" , // 信息窗口标题
 	    message:""
 	}
-    var infoWindow = new BMap.InfoWindow(`
-    <a href="/detail.html">1.无机物超标</a><br>
-    <a href="/detail.html">2.有机物超标</a><br>
-    <a href="/detail.html">3.湖内漂浮物过量</a>
+    var infoWindow = new BMap.InfoWindow(`该支流无机物过量，是影响龙虎潭原因
     `, opts);  // 创建信息窗口对象 
 const moveEvts = ['mouseover', 'mouseout'];
 for (let i = 0; i < moveEvts.length; i++) {
     const event = moveEvts[i];
-     tributary4.addEventListener(event, e => {
+     tributary3.addEventListener(event, e => {
             switch (event) {
                 case 'mouseover':
                 console.log(1)
-                    map.openInfoWindow(infoWindow, new BMap.Point(119.950402,30.669295)); //开启信息窗口
+                    map.openInfoWindow(infoWindow, new BMap.Point(119.995066,30.671913)); //开启信息窗口
                     break;
                 case 'mouseout':
                     // overlay.setFillColor('#fff');
@@ -489,7 +420,7 @@ for (let i = 0; i < moveEvts.length; i++) {
         });
 }
         </script>
- <script src="./echartsOptions.js">
+ <!-- <script src="./echartsOptions.js"> -->
  </script>
 </body>
 

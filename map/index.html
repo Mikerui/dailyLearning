@@ -112,8 +112,8 @@
             // 百度地图API功能
             // 
             var map = new BMap.Map('map', { mapType: BMAP_HYBRID_MAP });
-            var poi = new BMap.Point(119.979974, 30.676728);
-            map.centerAndZoom(poi, 15);
+            var poi = new BMap.Point(119.972824,30.670475);
+            map.centerAndZoom(poi, 15.2);
             map.enableScrollWheelZoom();
             $("getLastOverLay").onclick = function () {
                 if (overlays.length) {
@@ -469,9 +469,9 @@ new BMap.Point( 119.939299,  30.689492),
 	    message:""
 	}
     var infoWindow = new BMap.InfoWindow(`
-    <a href="/detail.html">1.无机物超标</a><br>
-    <a href="/detail.html">2.有机物超标</a><br>
-    <a href="/detail.html">3.湖内漂浮物过量</a>
+    <a href="./detail.html">1.无机物超标</a>
+    <div>2.有机物超标</div>
+    <div>3.湖内漂浮物过量</div>
     `, opts);  // 创建信息窗口对象 
 const moveEvts = ['mouseover', 'mouseout'];
 for (let i = 0; i < moveEvts.length; i++) {

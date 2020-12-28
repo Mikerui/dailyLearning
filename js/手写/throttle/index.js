@@ -56,36 +56,57 @@
  */
 function throttle(func, wait = 1000, type = 1) {
   if (type == 1) {
-    let timer = null;
+    let timer = null
     return function () {
-      const args = arguments;
-      const self = this;
+      const args = arguments
+      const self = this
       if (!timer) {
         timer = setTimeout(() => {
-          timer = null;
-          func.apply(self, [...args]);
-        }, wait);
+          timer = null
+          func.apply(self, [...args])
+        }, wait)
       }
-    };
+    }
   } else {
-    let previous = 0;
+    let previous = 0
     return function () {
-      const self = this;
-      const args = arguments;
-      let newDate = new Date().getTime();
+      const self = this
+      const args = arguments
+      let newDate = new Date().getTime()
       if (newDate - previous > wait) {
-        func.apply(self, [...args]);
-        previous = newDate;
+        func.apply(self, [...args])
+        previous = newDate
       }
-    };
+    }
   }
 }
 
 function fn() {
-  console.log('test throttle');
+  console.log('test throttle')
 }
 
-const fl = throttle(fn);
+const fl = throttle(fn)
 setInterval(() => {
-  fl();
-}, 25);
+  fl()
+}, 25)
+
+function throttle1(fn, wait = 500) {
+  let timer = null
+  let firstTime = true // 第一次执行
+  return function () {
+    if (firstTime) {
+      fn.apply(this, arguments)
+      return (firstTime = false)
+    }
+    // 定时器存在的情况
+    if (timer) {
+      return false
+    } else {
+      timer = setTimeout(() => {
+        clearTimeout(timer) // 清除定时器
+        timer = null
+        fn.apply(this, arguments)
+      }, wait)
+    }
+  }
+}

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      canvas {
+        background-color: #111;
+      }
+      body {
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+    <script>
+      var canvas = document.getElementById('canvas')
+      var context = canvas.getContext('2d')
+      // 获取浏览器的宽度和高度
+      var w = window.innerWidth
+      var h = window.innerHeight
+      // 设置canvas的宽高
+      canvas.width = w
+      canvas.height = h
+      // 每个文字的大小
+      var fontSize = 16
+      // 一共可以有多少列文字
+      var col = Math.floor(w / fontSize)
+      // 记录每列文字的y轴坐标
+      var cpy = []
+      for (var i = 0; i < col; i++) {
+        cpy[i] = 1
+      }
+      //定义文字
+      const str = '01010101010101010101'
+      // 绘制
+      draw()
+      setInterval(draw, 30)
+      function draw() {
+        context.beginPath()
+        // 背景填充颜色
+        context.fillStyle = 'rgba(0,0,0,0.05)'
+        context.fillRect(0, 0, w, h)
+        // 设置字体大小
+        context.font = fontSize + 'px bold 微软雅黑 '
+        // 设置字体颜色
+        context.fillStyle = '#00cc33'
+        for (var i = 0; i < col; i++) {
+          var index = Math.floor(Math.random() * str.length)
+          var x = i * fontSize
+          var y = cpy[i] * fontSize
+          context.fillText(str.charAt(index), x, y)
+          if (y >= h && Math.random() > 0.99) {
+            // 出现时间延迟的效果
+            cpy[i] = 0 // 只要Math.random> 0.99 时才纵坐标从0开始写字
+          }
+          cpy[i]++ // 数组值加一，以便下一次写的字在下面一行
+        }
+      }
+    </script>
+  </body>
+</html>

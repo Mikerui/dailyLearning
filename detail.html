@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>test</title>
+    <style>
+      body {
+      }
+      svg {
+      }
+      svg path {
+        /* fill: transparent;
+        stroke: #00fdfd; */
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        /* stroke-miterlimit: 4; */
+        /* stroke-dasharray: 80; */
+        /* animation: dash 3s linear infinite; */
+      }
+      @keyframes dash {
+        to {
+          stroke-dashoffset: 300;
+        }
+      } */
+    </style>
+  </head>
+  <body>
+    <svg
+      version="1.1"
+      id="mainsvg"
+      xmlns="https://www.w3.org/2000/svg"
+      xmlns:xlink="https://www.w3.org/1999/xlink"
+      x="0px"
+      y="0px"
+      xml:space="preserve"
+    >
+      <path
+        fill="transparent"
+        stroke="#00fdfd"
+        stroke-dasharray="80"
+        class="path"
+        d="M 50.846153,101.24244 10.963475,78.318508 11.495177,33.363658 51.909558,11.332758 91.792233,34.256691 91.26053,79.211541 Z"
+      >
+        <animate
+          attributeName="stroke-dashoffset"
+          begin="0s"
+          to="300"
+          dur="3s"
+          repeatCount="indefinite"
+        ></animate>
+      </path>
+    </svg>
+    <script></script>
+  </body>
+</html>

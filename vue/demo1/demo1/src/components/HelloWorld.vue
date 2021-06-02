@@ -35,7 +35,13 @@ export default {
   name: 'HelloWorld',
   props: {
     msg: String
-  }
+  },
+  methods: {
+    nameTest(id){
+     const arr = this.listtest.filter(res=>res.id === id)
+     return arr[0].name || ""
+    }
+  },
 }
 </script>
 

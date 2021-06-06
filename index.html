@@ -1,33 +1,28 @@
-
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>3D Globe (Pure canvas)</title>
 
-<head>
-<meta charset="UTF-8">
-<title>3D Globe (Pure canvas)</title>
+    <style>
+      body {
+        display: flex;
+        margin: 0;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        background-color: #171d26;
+      }
 
+      canvas {
+        width: 98vmin;
+        height: 98vmin;
+      }
+    </style>
+  </head>
 
-
-<style>body {
-    display: flex;
-    margin: 0;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: #171D26;
-  }
-  
-  canvas {
-    width: 98vmin;
-    height: 98vmin;
-  }</style>
-
-
-</head>
-
-<body>
-<canvas id="scene"></canvas>
-<script  src="index.js"></script>
-</body>
-
+  <body>
+    <canvas id="scene"></canvas>
+    <script src="index.js"></script>
+  </body>
 </html>

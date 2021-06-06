@@ -1,7 +1,7 @@
 const glob = require('glob')
 // 阻塞IO
 console.time('time')
-const result = glob.sync(__dirname, './')
+const result = glob.sync(__dirname, '../')
 console.timeEnd('time')
 console.log(result)
 

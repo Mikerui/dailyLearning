@@ -24,4 +24,4 @@ class Chognxie extends Lady {
   }
 }
 const chognxie = new Chognxie()
-console.log(chognxie.sayHello(), chognxie.sayLove())
+console.log(chognxie.sayHello(), chognxie.sayLove())  
